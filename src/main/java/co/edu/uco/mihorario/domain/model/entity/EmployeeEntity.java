@@ -1,8 +1,9 @@
-package co.edu.uco.mihorario.infrastructure.adapters.persistence.entity;
+package co.edu.uco.mihorario.domain.model.entity;
 
 import java.util.UUID;
 
-import co.edu.uco.mihorario.domain.helpers.UuidHelper;
+import co.edu.uco.mihorario.crosscutting.helpers.StringHelper;
+import co.edu.uco.mihorario.crosscutting.helpers.UuidHelper;
 
 public class EmployeeEntity {
     private UUID id;
@@ -11,25 +12,25 @@ public class EmployeeEntity {
     private String document;
     private String phone;
     private String email;
-    private Boolean state;
+    private boolean state;
 
     public EmployeeEntity(UUID id, String name, String lastName, String document, String phone, String email,
-            Boolean state) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.document = document;
-        this.phone = phone;
-        this.email = email;
-        this.state = state;
+            boolean state) {
+        setId(id);
+        setName(name);
+        setLastName(lastName);
+        setDocument(document);
+        setPhone(phone);
+        setEmail(email);
+        setState(state);
     }
 
     public UUID getId() {
         return id;
     }
 
-    public void setId() {
-        this.id = UuidHelper.generateUuid();
+    public void setId(UUID id) {
+        this.id = UuidHelper.nullSafeId(id);
     }
 
     public String getName() {
@@ -37,7 +38,7 @@ public class EmployeeEntity {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = StringHelper.stringNotNullOrEmpty(name);
     }
 
     public String getLastName() {
@@ -45,7 +46,7 @@ public class EmployeeEntity {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName = StringHelper.stringNotNullOrEmpty(lastName);
     }
 
     public String getDocument() {
@@ -53,7 +54,7 @@ public class EmployeeEntity {
     }
 
     public void setDocument(String document) {
-        this.document = document;
+        this.document = StringHelper.stringNotNullOrEmpty(document);
     }
 
     public String getPhone() {
@@ -61,7 +62,7 @@ public class EmployeeEntity {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phone = StringHelper.stringNotNullOrEmpty(phone);
     }
 
     public String getEmail() {
@@ -69,14 +70,14 @@ public class EmployeeEntity {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = StringHelper.stringNotNullOrEmpty(email);
     }
 
-    public Boolean getState() {
+    public boolean isState() {
         return state;
     }
 
-    public void setState(Boolean state) {
+    public void setState(boolean state) {
         this.state = state;
     }
 }

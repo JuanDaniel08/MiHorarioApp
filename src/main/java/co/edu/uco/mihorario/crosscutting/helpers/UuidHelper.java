@@ -18,4 +18,8 @@ public class UuidHelper {
     public static String generateString() {
         return UUID.randomUUID().toString();
     }
+
+    public static UUID nullSafeId(UUID uuid) {
+        return uuid == null ? UUID.randomUUID() : uuid;
+    }
 }

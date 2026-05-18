@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.UUID;
 
-import co.edu.uco.mihorario.domain.helpers.UuidHelper;
+import co.edu.uco.mihorario.crosscutting.helpers.UuidHelper;
 
 public class AddShiftDomain {
     private UUID id;
@@ -16,20 +16,26 @@ public class AddShiftDomain {
     private Boolean state;
     private String observation;
 
-    public AddShiftDomain(String idEmployee, Date date, Time startTime, Time endTime, Boolean state) {
-        this.idEmployee = idEmployee;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.state = state;
+    public AddShiftDomain(UUID id, UUID idEmployee, UUID idLabor, Date date, Time startTime, Time endTime,
+            Boolean state,
+            String observation) {
+        super();
+        UuidHelper.generateUuid();
+        setIdEmployee(idEmployee);
+        setIdLabor(idLabor);
+        setDate(date);
+        setStartTime(startTime);
+        setEndTime(endTime);
+        setState(state);
+        setObservation(observation);
     }
 
     public UUID getId() {
         return id;
     }
 
-    public void setId() {
-        this.id = UuidHelper.generateUuid();
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public UUID getIdEmployee() {
