@@ -41,7 +41,10 @@ jobs:
     - name: Compilar y Lanzar Escaneo de Sonar
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Lo genera GitHub solo
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # Este lo guardaremos en GitHub ahora
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        DB_URL: jdbc:postgresql://localhost:5432/MiHorario  # O la URL de tu BD de pruebas si usas una externa
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}    # Este lo guardaremos en GitHub ahora
       run: |
         mvn -B verify sonar:sonar \
           -Dsonar.projectKey=juandaniel08_MiHorarioApp \
