@@ -9,7 +9,7 @@ public class EmployeeEntity {
     private UUID id;
     private String name;
     private String lastName;
-    private String document;
+    private String identification;
     private String phone;
     private String email;
     private boolean state;
@@ -19,7 +19,7 @@ public class EmployeeEntity {
         setId(id);
         setName(name);
         setLastName(lastName);
-        setDocument(document);
+        setIdentification(identification);
         setPhone(phone);
         setEmail(email);
         setState(state);
@@ -49,12 +49,12 @@ public class EmployeeEntity {
         this.lastName = StringHelper.stringNotNullOrEmpty(lastName);
     }
 
-    public String getDocument() {
-        return document;
+    public String getIdentification() {
+        return identification;
     }
 
-    public void setDocument(String document) {
-        this.document = StringHelper.stringNotNullOrEmpty(document);
+    public void setIdentification(String identification) {
+        this.identification = StringHelper.stringNotNullOrEmpty(identification);
     }
 
     public String getPhone() {

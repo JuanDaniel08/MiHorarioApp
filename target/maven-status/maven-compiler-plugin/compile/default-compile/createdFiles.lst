@@ -1,0 +1,9 @@
+co\edu\uco\mihorario\domain\model\valueobject\TimeRange.class
+co\edu\uco\mihorario\crosscutting\helpers\StringHelper.class
+co\edu\uco\mihorario\domain\model\valueobject\EmployeeIdentification.class
+co\edu\uco\mihorario\application\dto\request\AddShiftRequestDTO.class
+co\edu\uco\mihorario\domain\exception\DomainException.class
+co\edu\uco\mihorario\domain\exception\custom\EstadoEmpleadoInvalidoException.class
+co\edu\uco\mihorario\application\usecase\input\AddShiftUseCase.class
+co\edu\uco\mihorario\crosscutting\helpers\TimeHelper.class
+co\edu\uco\mihorario\domain\model\enums\EmployeeStatus.class

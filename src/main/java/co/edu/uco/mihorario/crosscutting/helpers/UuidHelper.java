@@ -1,4 +1,4 @@
-package co.edu.uco.mihorario.domain.helpers;
+package co.edu.uco.mihorario.crosscutting.helpers;
 
 import java.util.UUID;
 
