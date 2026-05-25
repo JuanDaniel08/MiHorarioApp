@@ -1,9 +1,12 @@
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\dto\request\AddShiftRequestDTO.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\impl\AddShiftUseCaseImpl.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\input\AddShiftUseCase.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\exception\BusinessException.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\exception\MessageCatalogService.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\helpers\StringHelper.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\helpers\TimeHelper.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\helpers\UuidHelper.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\parameter\ParameterCatalogService.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\exception\custom\EstadoEmpleadoInvalidoException.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\exception\DomainException.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\model\entity\EmployeeEntity.java
@@ -19,5 +22,11 @@ C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\ports\out\ShiftRepository.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\persistence\entity\ShiftEntityJPA.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\persistence\repository\ShiftJpaRepository.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\persistence\ShiftRepositoryAdapter.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\redis\RedisMessageCatalogAdapter.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\redis\RedisParameterCatalogAdapter.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\config\security\SecurityConfig.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\config\ShiftConfig.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\config\SwaggerConfig.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\DemoApplication.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\entrypoints\api\rest\ShiftRestController.java
