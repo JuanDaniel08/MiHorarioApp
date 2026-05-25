@@ -15,7 +15,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity // Activa la protección de métodos individuales con @PreAuthorize
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -32,7 +32,7 @@ public class SecurityConfig {
                 // El Swagger y la documentación son públicos
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 
-                // Exigimos roles específicos para los turnos
+                // 🔒 Las restricciones por rol vuelven a estar activas en primer orden:
                 .requestMatchers(HttpMethod.POST, "/api/v1/shifts/**").hasRole("COORDINADOR")
                 .requestMatchers(HttpMethod.GET, "/api/v1/shifts/**").hasAnyRole("COORDINADOR", "EMPLEADO")
                 

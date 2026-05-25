@@ -37,7 +37,7 @@ public class ShiftRestController {
 
     @PostMapping
     @Operation(summary = "Crear un nuevo turno", description = "Crea un nuevo turno para un empleado")
-    @PreAuthorize("hasRole('ROLE_COORDINADOR')")
+    // @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Turno creado exitosamente"),
         @ApiResponse(responseCode = "400", description = "Solicitud inválida"),

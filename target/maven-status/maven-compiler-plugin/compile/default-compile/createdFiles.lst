@@ -19,7 +19,6 @@ co\edu\uco\mihorario\domain\model\entity\TrainingEntity.class
 co\edu\uco\mihorario\infrastructure\config\SwaggerConfig.class
 co\edu\uco\mihorario\application\usecase\impl\AddShiftUseCaseImpl.class
 co\edu\uco\mihorario\infrastructure\adapters\persistence\entity\ShiftEntityJPA.class
-co\edu\uco\mihorario\infrastructure\config\ShiftConfig.class
 co\edu\uco\mihorario\domain\model\valueobject\EmployeeIdentification.class
 co\edu\uco\mihorario\crosscutting\exception\MessageCatalogService.class
 co\edu\uco\mihorario\domain\model\entity\JobEntity.class

@@ -20,6 +20,7 @@ C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\model\valueobject\EmployeeIdentification.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\model\valueobject\TimeRange.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\ports\out\ShiftRepository.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\messaging\NotificationGatewayAdapter.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\persistence\entity\ShiftEntityJPA.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\persistence\repository\ShiftJpaRepository.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\persistence\ShiftRepositoryAdapter.java
