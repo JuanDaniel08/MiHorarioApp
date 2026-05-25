@@ -1,6 +1,9 @@
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\Application.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\dto\request\AddShiftRequestDTO.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\inputport\InputPort.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\impl\AddShiftUseCaseImpl.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\input\AddShiftUseCase.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\UseCase.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\exception\BusinessException.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\exception\MessageCatalogService.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\helpers\StringHelper.java
@@ -19,6 +22,7 @@ C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\model\Shift.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\model\valueobject\EmployeeIdentification.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\model\valueobject\TimeRange.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\ports\out\NotificationGateway.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\domain\ports\out\ShiftRepository.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\messaging\NotificationGatewayAdapter.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\persistence\entity\ShiftEntityJPA.java
