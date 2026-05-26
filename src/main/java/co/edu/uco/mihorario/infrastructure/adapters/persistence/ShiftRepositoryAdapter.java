@@ -79,4 +79,11 @@ public class ShiftRepositoryAdapter implements ShiftRepository {
         );
     }
 
+    @Override
+    public List<Shift> findAll() {
+        return this.shiftJpaRepository.findAll().stream()
+                .map(this::toShift)
+                .collect(Collectors.toList());
+    }
+
 }
