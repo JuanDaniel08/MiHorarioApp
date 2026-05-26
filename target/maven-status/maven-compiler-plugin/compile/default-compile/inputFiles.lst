@@ -11,6 +11,7 @@ C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\UseCase.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\exception\BusinessException.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\exception\MessageCatalogService.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\helpers\HtmlSanitizerHelper.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\helpers\StringHelper.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\helpers\TimeHelper.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\helpers\UuidHelper.java

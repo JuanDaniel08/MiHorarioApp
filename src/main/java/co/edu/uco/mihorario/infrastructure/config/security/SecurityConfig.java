@@ -1,8 +1,10 @@
 package co.edu.uco.mihorario.infrastructure.config.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +20,9 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:}")
+    private String issuerUri;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -27,29 +32,35 @@ public class SecurityConfig {
             // Desactivamos CSRF porque las APIs REST usan tokens (JWT), no cookies
             .csrf(csrf -> csrf.disable())
             
-            // Registramos el filtro JWT personalizado para validar los tokens de rol
-            .addFilterBefore(new JwtAuthenticationFilter(), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
+            // Registramos el filtro JWT personalizado para validar los tokens de rol (mock/desarrollo local)
+            .addFilterBefore(new JwtAuthenticationFilter(), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
             
-            // Configuración de las reglas de los endpoints
-            .authorizeHttpRequests(auth -> auth
-                // El Swagger, archivos estáticos y la documentación son públicos
-                .requestMatchers(
-                    "/",
-                    "/index.html",
-                    "/css/**",
-                    "/js/**",
-                    "/swagger-ui.html",
-                    "/swagger-ui/**",
-                    "/v3/api-docs/**"
-                ).permitAll()
-                
-                // 🔒 Las restricciones por rol vuelven a estar activas en primer orden:
-                .requestMatchers(HttpMethod.POST, "/api/v1/shifts/**").hasRole("COORDINADOR")
-                .requestMatchers(HttpMethod.GET, "/api/v1/shifts/**").hasAnyRole("COORDINADOR", "EMPLEADO")
-                
-                // Cualquier otra petición debe estar autenticada
-                .anyRequest().authenticated()
-            );
+        // 🔐 2. Habilitamos el soporte para validar tokens JWT federados (Identity Provider) en la nube si hay un emisor configurado
+        if (issuerUri != null && !issuerUri.trim().isEmpty() && !issuerUri.contains("dev-placeholder")) {
+            http.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+        }
+            
+        // Configuración de las reglas de los endpoints
+        http.authorizeHttpRequests(auth -> auth
+            // El Swagger, archivos estáticos, Actuator y la documentación son públicos
+            .requestMatchers(
+                "/",
+                "/index.html",
+                "/css/**",
+                "/js/**",
+                "/swagger-ui.html",
+                "/swagger-ui/**",
+                "/v3/api-docs/**",
+                "/actuator/**"
+            ).permitAll()
+            
+            // 🔒 Las restricciones por rol vuelven a estar activas en primer orden:
+            .requestMatchers(HttpMethod.POST, "/api/v1/shifts/**").hasRole("COORDINADOR")
+            .requestMatchers(HttpMethod.GET, "/api/v1/shifts/**").hasAnyRole("COORDINADOR", "EMPLEADO")
+            
+            // Cualquier otra petición debe estar autenticada
+            .anyRequest().authenticated()
+        );
 
         return http.build();
     }
