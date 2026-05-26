@@ -66,7 +66,19 @@ public class ShiftRestController {
         }
 
         try {
-            addShiftUseCase.execute(requestDto);
+            // 🛡️ Sanitizar el campo de observaciones contra ataques XSS (OWASP HTML Sanitizer)
+            String sanitizedObservation = co.edu.uco.mihorario.crosscutting.helpers.HtmlSanitizerHelper.sanitize(requestDto.observation());
+            AddShiftRequestDTO sanitizedRequestDto = new AddShiftRequestDTO(
+                    requestDto.employeeId(),
+                    requestDto.laborId(),
+                    requestDto.date(),
+                    requestDto.startTime(),
+                    requestDto.endTime(),
+                    requestDto.active(),
+                    sanitizedObservation
+            );
+
+            addShiftUseCase.execute(sanitizedRequestDto);
             log.info("[ÉXITO] Turno procesado y creado exitosamente en el sistema.");
             return new ResponseEntity<>(HttpStatus.CREATED);
             
