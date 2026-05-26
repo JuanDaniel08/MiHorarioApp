@@ -11,8 +11,6 @@ WORKDIR /app
 # Copia el archivo .jar generado en la fase anterior (se llama demo porque así está en tu pom.xml)
 COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
 
-# Expone el puerto 8081 que configuraste en tu application.properties
-EXPOSE 8081
 
 # Comando para arrancar tu servidor Spring Boot
 ENTRYPOINT ["java", "-jar", "app.jar"]
