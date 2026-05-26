@@ -6,11 +6,38 @@ const ENDPOINTS = {
     labors: `${API_BASE}/labors`
 };
 
+function getAuthHeaders(includeCaptcha = false) {
+    const headers = {};
+    const savedUser = localStorage.getItem('mihorario_user');
+    let user = currentUser;
+    if (!user && savedUser) {
+        try {
+            user = JSON.parse(savedUser);
+        } catch (e) {}
+    }
+    if (user) {
+        const token = user.role === 'admin' ? 'token-valid-coordinador' : 'token-invalid-empleado';
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+    if (includeCaptcha) {
+        headers['X-Captcha-Token'] = 'google-recaptcha-v3-token-valid';
+    }
+    return headers;
+}
+
 // Global State
 let employees = [];
 let labors = [];
 let shifts = [];
 let currentUser = null; // { id, name, email, role: 'admin' | 'employee' }
+
+// Captcha State
+let captchaSolved = false;
+let pendingUser = null;
+let targetX = 0;
+let isDragging = false;
+let startX = 0;
+let currentLeft = 0;
 
 // DOM Elements - Login Screen
 const loginScreen = document.getElementById('login-screen');
@@ -53,6 +80,16 @@ const statInactive = document.getElementById('stat-inactive');
 
 const toastContainer = document.getElementById('toast-container');
 
+// DOM Elements - Captcha Modal
+const captchaModal = document.getElementById('captcha-modal');
+const captchaBg = document.getElementById('captcha-bg');
+const captchaSlot = document.getElementById('captcha-slot');
+const captchaPiece = document.getElementById('captcha-piece');
+const captchaThumb = document.getElementById('captcha-thumb');
+const captchaSliderBar = document.getElementById('captcha-slider-bar');
+const captchaErrorMsg = document.getElementById('captcha-error-msg');
+const btnCaptchaCancel = document.getElementById('btn-captcha-cancel');
+
 // Initialize the Application
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Initialise Lucide icons
@@ -67,6 +104,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 4. Check for existing session
     checkSession();
+
+    // 5. Captcha Dragging Listeners
+    captchaThumb.addEventListener('mousedown', handleStart);
+    document.addEventListener('mousemove', handleMove);
+    document.addEventListener('mouseup', handleEnd);
+    
+    captchaThumb.addEventListener('touchstart', handleStart);
+    document.addEventListener('touchmove', handleMove);
+    document.addEventListener('touchend', handleEnd);
+    
+    btnCaptchaCancel.addEventListener('click', () => {
+        captchaModal.classList.add('hidden');
+        pendingUser = null;
+    });
 });
 
 // Toast notification helper
@@ -155,6 +206,11 @@ async function setupAppForUser() {
         document.querySelector('.stat-card:nth-child(3) .stat-label').textContent = 'Mis Turnos Inactivos';
     }
 
+    // Refresh static data in case it wasn't loaded
+    if (employees.length === 0 || labors.length === 0) {
+        await loadStaticData();
+    }
+
     // Refresh shifts from API
     await loadShifts();
 }
@@ -172,8 +228,8 @@ function getInitials(name) {
 async function loadStaticData() {
     try {
         const [empRes, labRes] = await Promise.all([
-            fetch(ENDPOINTS.employees).catch(() => null),
-            fetch(ENDPOINTS.labors).catch(() => null)
+            fetch(ENDPOINTS.employees, { headers: getAuthHeaders() }).catch(() => null),
+            fetch(ENDPOINTS.labors, { headers: getAuthHeaders() }).catch(() => null)
         ]);
 
         if (empRes && empRes.ok) {
@@ -208,7 +264,7 @@ function populateSelect(selectEl, items, textFn) {
 async function loadShifts() {
     renderLoading(true);
     try {
-        const res = await fetch(ENDPOINTS.shifts);
+        const res = await fetch(ENDPOINTS.shifts, { headers: getAuthHeaders() });
         if (res.ok) {
             shifts = await res.json();
             
@@ -347,6 +403,117 @@ function renderErrorState() {
     lucide.createIcons();
 }
 
+// Captcha Implementation
+function initCaptcha(user) {
+    pendingUser = user;
+    captchaSolved = false;
+    captchaErrorMsg.style.display = 'none';
+    
+    // Reset positions
+    currentLeft = 0;
+    captchaPiece.style.left = '10px';
+    captchaThumb.style.left = '0px';
+    
+    // Generate random target position for slot between 100px and 240px
+    const maxTarget = captchaBg.offsetWidth > 0 ? (captchaBg.offsetWidth - 70) : 240;
+    targetX = Math.floor(Math.random() * (maxTarget - 100)) + 100;
+    captchaSlot.style.left = `${targetX}px`;
+    
+    // Reset guide text opacity
+    const guideText = document.querySelector('.captcha-slider-guide-text');
+    if (guideText) {
+        guideText.style.opacity = '1';
+    }
+    
+    // Show modal
+    captchaModal.classList.remove('hidden');
+}
+
+function handleStart(e) {
+    if (captchaSolved) return;
+    isDragging = true;
+    startX = e.clientX || (e.touches && e.touches[0].clientX);
+    captchaThumb.style.cursor = 'grabbing';
+    captchaPiece.style.cursor = 'grabbing';
+}
+
+function handleMove(e) {
+    if (!isDragging || captchaSolved) return;
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    if (clientX === undefined) return;
+    
+    const deltaX = clientX - startX;
+    
+    const maxSlide = captchaSliderBar.offsetWidth - captchaThumb.offsetWidth;
+    let newLeft = Math.max(0, Math.min(deltaX, maxSlide));
+    
+    captchaThumb.style.left = `${newLeft}px`;
+    
+    const maxPieceSlide = captchaBg.offsetWidth - captchaPiece.offsetWidth - 10;
+    const pieceLeft = 10 + (newLeft / maxSlide) * maxPieceSlide;
+    captchaPiece.style.left = `${pieceLeft}px`;
+    
+    currentLeft = pieceLeft;
+    
+    const guideText = document.querySelector('.captcha-slider-guide-text');
+    if (guideText) {
+        guideText.style.opacity = Math.max(0, 1 - (newLeft / 60));
+    }
+}
+
+function handleEnd() {
+    if (!isDragging || captchaSolved) return;
+    isDragging = false;
+    captchaThumb.style.cursor = 'grab';
+    captchaPiece.style.cursor = 'grab';
+    
+    const tolerance = 6;
+    const diff = Math.abs(currentLeft - targetX);
+    
+    if (diff <= tolerance) {
+        // Success
+        captchaSolved = true;
+        captchaErrorMsg.style.display = 'none';
+        
+        captchaThumb.style.background = 'var(--success)';
+        captchaPiece.style.borderColor = 'var(--success)';
+        
+        setTimeout(() => {
+            currentUser = pendingUser;
+            localStorage.setItem('mihorario_user', JSON.stringify(currentUser));
+            localStorage.setItem('mihorario_captcha_token', 'google-recaptcha-v3-token-valid');
+            
+            captchaModal.classList.add('hidden');
+            setupAppForUser();
+            
+            showToast('Acceso Concedido', `Bienvenido(a), ${currentUser.name}.`, 'success');
+            
+            // Clean up visual changes
+            captchaThumb.style.background = '';
+            captchaPiece.style.borderColor = '';
+        }, 600);
+    } else {
+        // Fail
+        captchaErrorMsg.style.display = 'block';
+        
+        captchaThumb.style.transition = 'left 0.3s ease';
+        captchaPiece.style.transition = 'left 0.3s ease';
+        
+        captchaThumb.style.left = '0px';
+        captchaPiece.style.left = '10px';
+        
+        const guideText = document.querySelector('.captcha-slider-guide-text');
+        if (guideText) {
+            guideText.style.opacity = '1';
+        }
+        
+        setTimeout(() => {
+            captchaThumb.style.transition = '';
+            captchaPiece.style.transition = '';
+        }, 300);
+    }
+}
+
 // Login Submit Handler
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -378,14 +545,12 @@ loginForm.addEventListener('submit', (e) => {
 
     // Admin Auth Mock Check
     if (usernameVal === 'admin' && passwordVal === 'admin123') {
-        currentUser = {
+        const adminUser = {
             role: 'admin',
             name: 'Administrador Sistema',
             email: 'admin@mihorario.com'
         };
-        localStorage.setItem('mihorario_user', JSON.stringify(currentUser));
-        setupAppForUser();
-        showToast('Acceso Concedido', 'Sesión iniciada como Administrador.', 'success');
+        initCaptcha(adminUser);
         return;
     }
 
@@ -395,15 +560,13 @@ loginForm.addEventListener('submit', (e) => {
     );
 
     if (matchedEmployee) {
-        currentUser = {
+        const empUser = {
             id: matchedEmployee.id,
             role: 'employee',
             name: `${matchedEmployee.name} ${matchedEmployee.lastName}`,
             email: matchedEmployee.email
         };
-        localStorage.setItem('mihorario_user', JSON.stringify(currentUser));
-        setupAppForUser();
-        showToast('Acceso Concedido', `Bienvenido(a), ${matchedEmployee.name}.`, 'success');
+        initCaptcha(empUser);
     } else {
         loginCredentialsError.style.display = 'block';
     }
@@ -414,6 +577,7 @@ btnLogout.addEventListener('click', (e) => {
     e.preventDefault();
     currentUser = null;
     localStorage.removeItem('mihorario_user');
+    localStorage.removeItem('mihorario_captcha_token');
     
     // Clear inputs
     loginUsername.value = '';
@@ -431,7 +595,8 @@ async function handleDeleteShift(id) {
 
     try {
         const res = await fetch(`${ENDPOINTS.shifts}/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: getAuthHeaders()
         });
 
         if (res.ok) {
@@ -492,7 +657,8 @@ shiftForm.addEventListener('submit', async (e) => {
             const res = await fetch(ENDPOINTS.shifts, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    ...getAuthHeaders(true)
                 },
                 body: JSON.stringify(shiftDataObj)
             });

@@ -27,6 +27,9 @@ public class SecurityConfig {
             // Desactivamos CSRF porque las APIs REST usan tokens (JWT), no cookies
             .csrf(csrf -> csrf.disable())
             
+            // Registramos el filtro JWT personalizado para validar los tokens de rol
+            .addFilterBefore(new JwtAuthenticationFilter(), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
+            
             // Configuración de las reglas de los endpoints
             .authorizeHttpRequests(auth -> auth
                 // El Swagger y la documentación son públicos

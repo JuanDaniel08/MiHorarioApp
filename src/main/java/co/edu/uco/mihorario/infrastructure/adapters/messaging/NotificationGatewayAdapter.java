@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
+@org.springframework.context.annotation.PropertySource("classpath:notifications.properties")
 public class NotificationGatewayAdapter implements NotificationGateway {
 
     private static final Logger log = LoggerFactory.getLogger(NotificationGatewayAdapter.class);
