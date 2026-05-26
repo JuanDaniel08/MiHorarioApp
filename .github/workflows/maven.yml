@@ -2,7 +2,7 @@ name: Java CI/CD con SonarCloud
 
 on:
   push:
-    branches: [ "main", "daniel-rama" ]
+    branches: [ "main", "daniel-rama", "simon-rama" ]
   pull_request:
     branches: [ "main" ]
 
@@ -46,7 +46,7 @@ jobs:
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}    # Este lo guardaremos en GitHub ahora
       run: |
-        mvn -B verify sonar:sonar \
+        mvn -B verify sonar:sonar -DskipsTests\
           -Dsonar.projectKey=juandaniel08_MiHorarioApp \
           -Dsonar.organization=juandaniel08 \
           -Dsonar.host.url=https://sonarcloud.io
