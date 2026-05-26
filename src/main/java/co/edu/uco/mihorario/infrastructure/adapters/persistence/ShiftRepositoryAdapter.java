@@ -24,22 +24,21 @@ public class ShiftRepositoryAdapter implements ShiftRepository {
 
     @Override
     public void save(Shift shift) {
-        // Mapeamos el objeto inmutable de dominio a la entidad JPA que me acabas de mostrar
+        // Mapeamos el objeto inmutable de dominio a la entidad JPA que me acabas de
+        // mostrar
         ShiftEntityJPA jpaEntity = new ShiftEntityJPA(
-            shift.getId() != null ? shift.getId() : UUID.randomUUID(),
-            shift.getEmployeeId(),
-            shift.getLaborId(),
-            shift.getDate(),
-            shift.getTimeRange().startTime(), // Extrayendo del Value Object TimeRange
-            shift.getTimeRange().endTime(),   // Extrayendo del Value Object TimeRange
-            shift.isActive(),
-            shift.getObservation()
-        );
+                shift.getId() != null ? shift.getId() : UUID.randomUUID(),
+                shift.getEmployeeId(),
+                shift.getLaborId(),
+                shift.getDate(),
+                shift.getTimeRange().startTime(), // Extrayendo del Value Object TimeRange
+                shift.getTimeRange().endTime(), // Extrayendo del Value Object TimeRange
+                shift.isActive(),
+                shift.getObservation());
 
         // Guardamos en PostgreSQL
         this.shiftJpaRepository.save(jpaEntity);
     }
-   
 
     @Override
     public void delete(UUID id) {
@@ -67,6 +66,13 @@ public class ShiftRepositoryAdapter implements ShiftRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Shift> findAll() {
+        return this.shiftJpaRepository.findAll().stream()
+                .map(this::toShift)
+                .collect(Collectors.toList());
+    }
+
     private Shift toShift(ShiftEntityJPA entity) {
         return new Shift(
                 entity.getId(),
@@ -75,8 +81,7 @@ public class ShiftRepositoryAdapter implements ShiftRepository {
                 entity.getDate(),
                 new TimeRange(entity.getStartTime(), entity.getEndTime()),
                 entity.getActive(),
-                entity.getObservation()
-        );
+                entity.getObservation());
     }
 
 }

@@ -55,6 +55,46 @@
         </div>
     </div>
 
+    <!-- Captcha Modal -->
+    <div id="captcha-modal" class="captcha-overlay hidden">
+        <div class="captcha-container animate-fade-in">
+            <div class="captcha-header">
+                <div class="captcha-icon-container">
+                    <i data-lucide="shield-check" class="captcha-logo-icon"></i>
+                </div>
+                <h3>Verificación de Seguridad</h3>
+                <p>Desliza el bloque para encajarlo en el área sombreada.</p>
+            </div>
+            
+            <div class="captcha-puzzle-area">
+                <div class="captcha-bg-image" id="captcha-bg">
+                    <!-- The slot that needs to be filled (shaded target area) -->
+                    <div class="captcha-target-slot" id="captcha-slot"></div>
+                    <!-- The sliding piece -->
+                    <div class="captcha-slider-piece" id="captcha-piece"></div>
+                </div>
+            </div>
+
+            <!-- Slider bar -->
+            <div class="captcha-slider-bar-container" id="captcha-slider-bar">
+                <div class="captcha-slider-track">
+                    <span class="captcha-slider-guide-text">Desliza para verificar →</span>
+                </div>
+                <div class="captcha-slider-thumb" id="captcha-thumb">
+                    <i data-lucide="chevrons-right"></i>
+                </div>
+            </div>
+            
+            <span class="error-msg" id="captcha-error-msg" style="text-align: center; margin-top: 10px; background-color: var(--danger-light); padding: 8px; border-radius: var(--radius-sm);">¡Verificación incorrecta! Inténtalo de nuevo.</span>
+            
+            <div class="captcha-footer">
+                <button type="button" id="btn-captcha-cancel" class="btn btn-secondary">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="app-container hidden" id="app-container">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">

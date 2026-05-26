@@ -1,8 +1,13 @@
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\Application.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\dto\request\AddShiftRequestDTO.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\dto\response\ShiftResponseDTO.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\inputport\InputPort.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\impl\AddShiftUseCaseImpl.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\impl\DeleteShiftUseCaseImpl.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\impl\GetShiftsUseCaseImpl.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\input\AddShiftUseCase.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\input\DeleteShiftUseCase.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\input\GetShiftsUseCase.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\application\usecase\UseCase.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\exception\BusinessException.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\crosscutting\exception\MessageCatalogService.java
@@ -30,8 +35,11 @@ C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\persistence\ShiftRepositoryAdapter.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\redis\RedisMessageCatalogAdapter.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\adapters\redis\RedisParameterCatalogAdapter.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\config\security\JwtAuthenticationFilter.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\config\security\SecurityConfig.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\config\ShiftConfig.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\config\SwaggerConfig.java
-C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\DemoApplication.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\entrypoints\api\rest\EmployeeRestController.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\entrypoints\api\rest\GlobalExceptionHandler.java
+C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\entrypoints\api\rest\LaborRestController.java
 C:\Users\jrodr\OneDrive\Documentos\semestre_1-2026\software2\proyectoExtraClase\mi_horario_app\src\main\java\co\edu\uco\mihorario\infrastructure\entrypoints\api\rest\ShiftRestController.java
