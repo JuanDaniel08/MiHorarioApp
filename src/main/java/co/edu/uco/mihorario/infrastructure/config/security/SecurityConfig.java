@@ -32,8 +32,16 @@ public class SecurityConfig {
             
             // Configuración de las reglas de los endpoints
             .authorizeHttpRequests(auth -> auth
-                // El Swagger y la documentación son públicos
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                // El Swagger, archivos estáticos y la documentación son públicos
+                .requestMatchers(
+                    "/",
+                    "/index.html",
+                    "/css/**",
+                    "/js/**",
+                    "/swagger-ui.html",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**"
+                ).permitAll()
                 
                 // 🔒 Las restricciones por rol vuelven a estar activas en primer orden:
                 .requestMatchers(HttpMethod.POST, "/api/v1/shifts/**").hasRole("COORDINADOR")
