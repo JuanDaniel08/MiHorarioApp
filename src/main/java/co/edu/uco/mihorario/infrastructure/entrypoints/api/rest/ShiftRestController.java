@@ -1,6 +1,5 @@
 package co.edu.uco.mihorario.infrastructure.entrypoints.api.rest;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -13,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,18 +31,16 @@ public class ShiftRestController {
         this.addShiftUseCase = addShiftUseCase;
     }
 
-    
-
     @PostMapping
     @Operation(summary = "Crear un nuevo turno", description = "Crea un nuevo turno para un empleado")
     // @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Turno creado exitosamente"),
-        @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
-        @ApiResponse(responseCode = "401", description = "No autorizado"),
-        @ApiResponse(responseCode = "403", description = "Prohibido"),
-        @ApiResponse(responseCode = "404", description = "No encontrado"),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            @ApiResponse(responseCode = "201", description = "Turno creado exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
+            @ApiResponse(responseCode = "401", description = "No autorizado"),
+            @ApiResponse(responseCode = "403", description = "Prohibido"),
+            @ApiResponse(responseCode = "404", description = "No encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
 
     public ResponseEntity<Void> createShift(@RequestBody AddShiftRequestDTO requestDto) {
@@ -58,7 +54,7 @@ public class ShiftRestController {
             addShiftUseCase.execute(requestDto);
             log.info("[ÉXITO] Turno procesado y creado exitosamente en el sistema.");
             return new ResponseEntity<>(HttpStatus.CREATED);
-            
+
         } catch (Exception e) {
             log.error("[ERROR] Falló la creación del turno. Motivo: {}", e.getMessage(), e);
             throw e;
