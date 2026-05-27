@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiHorario - Panel de Control</title>
+    <!-- Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-logo-container">
+                    <i data-lucide="calendar-range" class="login-logo-icon"></i>
+                </div>
+                <h2>MiHorario</h2>
+                <p>Ingresa tus credenciales para acceder al sistema</p>
+            </div>
+            
+            <form id="login-form" novalidate>
+                <div class="form-group">
+                    <label for="login-username">
+                        <i data-lucide="user"></i> Usuario o Correo
+                    </label>
+                    <input type="text" id="login-username" placeholder="admin o correo@uco.edu.co" required>
+                    <span class="error-msg" id="login-username-error">Ingresa tu usuario o correo.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">
+                        <i data-lucide="key-round"></i> Contraseña
+                    </label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                    <span class="error-msg" id="login-password-error">Ingresa tu contraseña.</span>
+                </div>
+                
+                <span class="error-msg" id="login-credentials-error" style="text-align: center; background-color: var(--danger-light); padding: 8px; border-radius: var(--radius-sm);">Credenciales incorrectas. Inténtalo de nuevo.</span>
+
+                <button type="submit" id="btn-login-submit" class="btn btn-primary btn-block">
+                    <i data-lucide="log-in"></i> Ingresar
+                </button>
+            </form>
+            
+            <div class="login-help">
+                <p><strong>Administrador:</strong> admin / admin123</p>
+                <p><strong>Empleado:</strong> juan.dan@uco.edu.co o 10203040</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Captcha Modal -->
+    <div id="captcha-modal" class="captcha-overlay hidden">
+        <div class="captcha-container animate-fade-in">
+            <div class="captcha-header">
+                <div class="captcha-icon-container">
+                    <i data-lucide="shield-check" class="captcha-logo-icon"></i>
+                </div>
+                <h3>Verificación de Seguridad</h3>
+                <p>Desliza el bloque para encajarlo en el área sombreada.</p>
+            </div>
+            
+            <div class="captcha-puzzle-area">
+                <div class="captcha-bg-image" id="captcha-bg">
+                    <!-- The slot that needs to be filled (shaded target area) -->
+                    <div class="captcha-target-slot" id="captcha-slot"></div>
+                    <!-- The sliding piece -->
+                    <div class="captcha-slider-piece" id="captcha-piece"></div>
+                </div>
+            </div>
+
+            <!-- Slider bar -->
+            <div class="captcha-slider-bar-container" id="captcha-slider-bar">
+                <div class="captcha-slider-track">
+                    <span class="captcha-slider-guide-text">Desliza para verificar →</span>
+                </div>
+                <div class="captcha-slider-thumb" id="captcha-thumb">
+                    <i data-lucide="chevrons-right"></i>
+                </div>
+            </div>
+            
+            <span class="error-msg" id="captcha-error-msg" style="text-align: center; margin-top: 10px; background-color: var(--danger-light); padding: 8px; border-radius: var(--radius-sm);">¡Verificación incorrecta! Inténtalo de nuevo.</span>
+            
+            <div class="captcha-footer">
+                <button type="button" id="btn-captcha-cancel" class="btn btn-secondary">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container hidden" id="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="logo-icon-container">
+                    <i data-lucide="calendar-range" class="logo-icon"></i>
+                </div>
+                <h2>MiHorario</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#shifts-section" class="nav-item">
+                    <i data-lucide="clock"></i>
+                    <span>Turnos</span>
+                </a>
+                <a href="#schedule-section" id="nav-item-schedule" class="nav-item">
+                    <i data-lucide="plus-circle"></i>
+                    <span>Programar</span>
+                </a>
+                <a href="#" id="btn-logout" class="nav-item nav-logout">
+                    <i data-lucide="log-out"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Versión 1.0.0</p>
+                <div class="status-indicator">
+                    <span class="dot pulse"></span>
+                    <span>Servidor Conectado</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-header">
+                <div class="header-title">
+                    <h1>Planificación de Turnos</h1>
+                    <p>Gestiona y programa los turnos de trabajo de tus empleados</p>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar" id="user-avatar">JD</div>
+                    <div class="profile-info">
+                        <span class="profile-name" id="user-name">Juan Daniel</span>
+                        <span class="profile-role" id="user-role">Administrador</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Stats Grid -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper blue">
+                        <i data-lucide="calendar"></i>
+                    </div>
+                    <div class="stat-data">
+                        <span class="stat-label">Turnos Totales</span>
+                        <h3 id="stat-total">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper green">
+                        <i data-lucide="check-circle-2"></i>
+                    </div>
+                    <div class="stat-data">
+                        <span class="stat-label">Turnos Activos</span>
+                        <h3 id="stat-active">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper orange">
+                        <i data-lucide="x-circle"></i>
+                    </div>
+                    <div class="stat-data">
+                        <span class="stat-label">Turnos Inactivos</span>
+                        <h3 id="stat-inactive">0</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Split View: Form & List -->
+            <div class="split-view">
+                <!-- Left Column: Form to Schedule -->
+                <section id="schedule-section" class="card form-card">
+                    <div class="card-header">
+                        <i data-lucide="calendar-plus"></i>
+                        <h2>Programar Nuevo Turno</h2>
+                    </div>
+                    
+                    <form id="shift-form" novalidate>
+                        <!-- Employee Select -->
+                        <div class="form-group">
+                            <label for="employee-select">
+                                <i data-lucide="user"></i> Empleado
+                            </label>
+                            <select id="employee-select" required>
+                                <option value="" disabled selected>Selecciona un empleado...</option>
+                            </select>
+                            <span class="error-msg" id="employee-error">El empleado es obligatorio.</span>
+                        </div>
+
+                        <!-- Labor Select -->
+                        <div class="form-group">
+                            <label for="labor-select">
+                                <i data-lucide="briefcase"></i> Labor / Tarea
+                            </label>
+                            <select id="labor-select" required>
+                                <option value="" disabled selected>Selecciona una labor...</option>
+                            </select>
+                            <span class="error-msg" id="labor-error">La labor es obligatoria.</span>
+                        </div>
+
+                        <!-- Date -->
+                        <div class="form-group">
+                            <label for="shift-date">
+                                <i data-lucide="calendar-days"></i> Fecha del Turno
+                            </label>
+                            <input type="date" id="shift-date" required>
+                            <span class="error-msg" id="date-error">Selecciona una fecha válida.</span>
+                        </div>
+
+                        <!-- Time Range -->
+                        <div class="time-range-group">
+                            <div class="form-group">
+                                <label for="start-time">
+                                    <i data-lucide="clock-4"></i> Hora Inicio
+                                </label>
+                                <input type="time" id="start-time" required>
+                                <span class="error-msg" id="start-time-error">Requerido.</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="end-time">
+                                    <i data-lucide="clock-10"></i> Hora Fin
+                                </label>
+                                <input type="time" id="end-time" required>
+                                <span class="error-msg" id="end-time-error">Requerido.</span>
+                            </div>
+                        </div>
+                        <span class="error-msg" id="range-error">La hora de inicio debe ser anterior a la hora de fin.</span>
+
+                        <!-- State Toggle -->
+                        <div class="form-group toggle-group">
+                            <label for="shift-active" class="toggle-label">
+                                <span class="label-text">
+                                    <i data-lucide="toggle-left"></i> Turno Activo
+                                </span>
+                                <input type="checkbox" id="shift-active" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <!-- Observations -->
+                        <div class="form-group">
+                            <label for="shift-observation">
+                                <i data-lucide="message-square"></i> Observaciones (Opcional)
+                            </label>
+                            <textarea id="shift-observation" rows="3" placeholder="Ej. Llevar implementos de seguridad..."></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" id="btn-submit" class="btn btn-primary">
+                            <i data-lucide="save"></i> Guardar Turno
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Right Column: Shift List -->
+                <section id="shifts-section" class="card list-card">
+                    <div class="card-header search-header">
+                        <div class="title-with-icon">
+                            <i data-lucide="clipboard-list"></i>
+                            <h2>Listado de Turnos</h2>
+                        </div>
+                        <div class="search-box">
+                            <i data-lucide="search"></i>
+                            <input type="text" id="search-input" placeholder="Buscar por empleado...">
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="shifts-table">
+                            <thead>
+                                <tr>
+                                    <th>Empleado</th>
+                                    <th>Labor</th>
+                                    <th>Fecha</th>
+                                    <th>Horario</th>
+                                    <th>Estado</th>
+                                    <th>Observaciones</th>
+                                    <th class="actions-header" id="th-actions">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="shifts-tbody">
+                                <!-- Loaded dynamically -->
+                                <tr class="loading-row">
+                                    <td colspan="7">
+                                        <div class="loading-container">
+                                            <div class="spinner"></div>
+                                            <span>Cargando turnos...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
