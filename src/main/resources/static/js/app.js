@@ -1,5 +1,7 @@
 // API Configuration
-const API_BASE = '/api/v1';
+const API_BASE = (window.location.protocol === 'file:' || (window.location.hostname === 'localhost' && window.location.port !== '8081' && window.location.port !== ''))
+    ? 'http://localhost:8081/api/v1'
+    : '/api/v1';
 const ENDPOINTS = {
     shifts: `${API_BASE}/shifts`,
     employees: `${API_BASE}/employees`,

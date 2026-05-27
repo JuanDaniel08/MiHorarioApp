@@ -5,7 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import java.util.UUID;
 import co.edu.uco.mihorario.application.dto.request.AddShiftRequestDTO;
+import co.edu.uco.mihorario.application.dto.response.ShiftResponseDTO;
 import co.edu.uco.mihorario.application.usecase.input.AddShiftUseCase;
+import co.edu.uco.mihorario.application.usecase.input.GetShiftsUseCase;
+import co.edu.uco.mihorario.application.usecase.input.DeleteShiftUseCase;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -13,22 +16,36 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/shifts") // Ruta base del endpoint para los turnos
 @Tag(name = "Shift", description = "API para gestionar los turnos de los empleados")
+@CrossOrigin(origins = "*")
 public class ShiftRestController {
 
     // 📊 Inicializamos el Logger oficial de la arquitectura
     private static final Logger log = LoggerFactory.getLogger(ShiftRestController.class);
     private final AddShiftUseCase addShiftUseCase;
+    private final GetShiftsUseCase getShiftsUseCase;
+    private final DeleteShiftUseCase deleteShiftUseCase;
 
     // Inyección de dependencias por constructor de Spring
-    public ShiftRestController(AddShiftUseCase addShiftUseCase) {
+    public ShiftRestController(
+            AddShiftUseCase addShiftUseCase,
+            GetShiftsUseCase getShiftsUseCase,
+            DeleteShiftUseCase deleteShiftUseCase
+    ) {
         this.addShiftUseCase = addShiftUseCase;
+        this.getShiftsUseCase = getShiftsUseCase;
+        this.deleteShiftUseCase = deleteShiftUseCase;
     }
 
     @PostMapping
@@ -84,5 +101,21 @@ public class ShiftRestController {
         } finally {
             MDC.clear(); // Limpiamos el hilo al terminar por seguridad
         }
+    }
+
+    @GetMapping
+    @Operation(summary = "Obtener todos los turnos", description = "Retorna la lista de todos los turnos registrados")
+    public ResponseEntity<List<ShiftResponseDTO>> getShifts() {
+        log.info("[INICIO] Petición recibida para obtener todos los turnos.");
+        List<ShiftResponseDTO> shifts = getShiftsUseCase.execute();
+        return new ResponseEntity<>(shifts, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar un turno", description = "Elimina un turno por su ID")
+    public ResponseEntity<Void> deleteShift(@PathVariable UUID id) {
+        log.info("[INICIO] Petición recibida para eliminar el turno con ID: {}", id);
+        deleteShiftUseCase.execute(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
