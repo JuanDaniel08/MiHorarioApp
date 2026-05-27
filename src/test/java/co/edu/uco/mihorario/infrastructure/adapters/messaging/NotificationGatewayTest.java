@@ -15,4 +15,14 @@ public class NotificationGatewayTest {
     public void whenContextLoads_thenNotificationAdapterIsConfigured() {
         assertNotNull(notificationGatewayAdapter);
     }
+
+    @Test
+    public void testSendEmailIntegration() {
+        notificationGatewayAdapter.sendShiftNotification(
+                "jrodriguezgiraldo8@gmail.com",
+                "Juan Rodríguez",
+                "Zona Norte",
+                "2026-05-27 08:00"
+        );
+    }
 }

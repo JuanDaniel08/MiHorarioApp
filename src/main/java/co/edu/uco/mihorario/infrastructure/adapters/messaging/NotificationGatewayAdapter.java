@@ -34,11 +34,11 @@ public class NotificationGatewayAdapter implements NotificationGateway {
 
     @Override
     public void sendShiftNotification(String employeeEmail, String employeeName, String zoneName, String startDate) {
-        
+
         String finalMessage = String.format(bodyTemplate, employeeName, zoneName, startDate);
 
         Email from = new Email(fromEmail);
-        Email to = new Email(employeeEmail); 
+        Email to = new Email(employeeEmail);
         Content content = new Content("text/plain", finalMessage);
         Mail mail = new Mail(from, subject, to, content);
 
@@ -47,11 +47,11 @@ public class NotificationGatewayAdapter implements NotificationGateway {
 
         try {
             log.info("[NOTIFICATION GATEWAY] Desplegando petición externa hacia SendGrid...");
-            
+
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
-            
+
             Response response = sg.api(request);
 
             if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
