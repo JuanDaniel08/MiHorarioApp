@@ -8,8 +8,7 @@ import co.edu.uco.mihorario.application.usecase.impl.DeleteShiftUseCaseImpl;
 import co.edu.uco.mihorario.application.usecase.input.DeleteShiftUseCase;
 import co.edu.uco.mihorario.crosscutting.parameter.ParameterCatalogService;
 import co.edu.uco.mihorario.domain.ports.out.ShiftRepository;
-// ⚠️ Agrega este import si no está
-import co.edu.uco.mihorario.infrastructure.adapters.messaging.NotificationGatewayAdapter; 
+import co.edu.uco.mihorario.infrastructure.adapters.messaging.NotificationGatewayAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,7 +17,7 @@ public class ShiftConfig {
 
     @Bean
     public AddShiftUseCase addShiftUseCase(
-            ShiftRepository shiftRepository, 
+            ShiftRepository shiftRepository,
             ParameterCatalogService parameterCatalogService,
             NotificationGatewayAdapter notificationGatewayAdapter // 🚀 Inyectamos el nuevo adapter
     ) {
