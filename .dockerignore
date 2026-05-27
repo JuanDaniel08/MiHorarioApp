@@ -1,0 +1,8 @@
+target/
+.git/
+.mvn/
+*.cmd
+.gitignore
+.dockerignore
+Dockerfile
+HELP.md
