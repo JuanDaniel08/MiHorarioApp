@@ -34,3 +34,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### keycloak ###
+/target/
+/keycloak-26.6.2/
+*.ps1
+*.bat
+
