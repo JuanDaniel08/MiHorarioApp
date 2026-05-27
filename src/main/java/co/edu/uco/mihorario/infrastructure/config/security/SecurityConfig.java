@@ -8,6 +8,8 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -57,7 +59,8 @@ public class SecurityConfig {
                         "/actuator/**")
                 .permitAll()
 
-                // Permite consulta pública de empleados y labores para iniciar sesión y llenar desplegables
+                // Permite consulta pública de empleados y labores para iniciar sesión y llenar
+                // desplegables
                 .requestMatchers(HttpMethod.GET, "/api/v1/employees/**", "/api/v1/labors/**").permitAll()
 
                 // 🔒 Las restricciones por rol vuelven a estar activas en primer orden:
@@ -90,5 +93,15 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter authoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        authoritiesConverter.setAuthoritiesClaimName("roles"); // Nombre del atributo en el JWT JSON
+        authoritiesConverter.setAuthorityPrefix("ROLE_"); // Spring Security requiere que comiencen por ROLE_
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
+        return converter;
     }
 }
