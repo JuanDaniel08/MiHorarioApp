@@ -20,9 +20,9 @@ public interface ShiftRepository {
     // Busca todos los turnos programados para una fecha específica en el parque
     List<Shift> findByDate(LocalDate date);
 
-    // Busca todos los turnos del sistema
-    List<Shift> findAll();
-
     // Elimina un turno del sistema utilizando su ID
     void delete(UUID id);
+
+    // Busca todos los turnos en el sistema
+    List<Shift> findAll();
 }
