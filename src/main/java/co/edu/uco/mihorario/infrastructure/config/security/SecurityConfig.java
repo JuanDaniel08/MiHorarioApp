@@ -69,12 +69,12 @@ public class SecurityConfig {
 
                 // Permite consulta pública de empleados y labores para iniciar sesión y llenar
                 // desplegables
-                .requestMatchers(HttpMethod.GET, "/api/v1/employees/**", "/api/v1/labors/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/employees", "/api/v1/employees/**", "/api/v1/labors", "/api/v1/labors/**").permitAll()
 
                 // 🔒 Las restricciones por rol vuelven a estar activas en primer orden:
-                .requestMatchers(HttpMethod.POST, "/api/v1/shifts/**").hasRole("COORDINADOR")
-                .requestMatchers(HttpMethod.GET, "/api/v1/shifts/**").hasAnyRole("COORDINADOR", "EMPLEADO")
-                .requestMatchers(HttpMethod.DELETE, "/api/v1/shifts/**").hasRole("COORDINADOR")
+                .requestMatchers(HttpMethod.POST, "/api/v1/shifts", "/api/v1/shifts/**").hasRole("COORDINADOR")
+                .requestMatchers(HttpMethod.GET, "/api/v1/shifts", "/api/v1/shifts/**").hasAnyRole("COORDINADOR", "EMPLEADO")
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/shifts", "/api/v1/shifts/**").hasRole("COORDINADOR")
 
                 // Cualquier otra petición debe estar autenticada
                 .anyRequest().authenticated());
