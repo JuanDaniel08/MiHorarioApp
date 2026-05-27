@@ -22,4 +22,7 @@ public interface ShiftRepository {
 
     // Elimina un turno del sistema utilizando su ID
     void delete(UUID id);
+
+    // Busca todos los turnos en el sistema
+    List<Shift> findAll();
 }
