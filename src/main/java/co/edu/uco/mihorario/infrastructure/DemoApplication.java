@@ -1,1 +1,0 @@
-// DemoApplication removed – functionality moved to Application.java

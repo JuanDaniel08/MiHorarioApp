@@ -43,15 +43,38 @@ public class ShiftRestController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
 
-    public ResponseEntity<Void> createShift(@RequestBody AddShiftRequestDTO requestDto) {
+    public ResponseEntity<Void> createShift(
+            @RequestBody AddShiftRequestDTO requestDto,
+            @org.springframework.web.bind.annotation.RequestHeader(value = "X-Captcha-Token", required = false) String captchaToken,
+            @org.springframework.web.bind.annotation.RequestHeader(value = "Accept-Language", defaultValue = "es") String acceptLanguage
+    ) {
         // 🆔 Generamos un ID único de trazabilidad (Trace ID) para esta petición
-        String traceId = UUID.randomUUID().toString();
+        String traceId = MDC.get("traceId") != null ? MDC.get("traceId") : UUID.randomUUID().toString();
         MDC.put("traceId", traceId);
 
-        log.info("[INICIO] Petición recibida para registrar un nuevo turno. TraceID: {}", traceId);
+        log.info("[INICIO] Petición recibida para registrar un nuevo turno. TraceID: {}, Idioma: {}", traceId, acceptLanguage);
+
+        // 🛡️ Validación de Captcha (Punto 19)
+        if (captchaToken == null || !captchaToken.equals("google-recaptcha-v3-token-valid")) {
+            log.warn("[CAPTCHA] Falló la validación del reCAPTCHA. Token incorrecto o nulo: {}", captchaToken);
+            MDC.clear();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         try {
-            addShiftUseCase.execute(requestDto);
+            // 🛡️ Sanitizar el campo de observaciones contra ataques XSS (OWASP HTML Sanitizer)
+            String sanitizedObservation = co.edu.uco.mihorario.crosscutting.helpers.HtmlSanitizerHelper.sanitize(requestDto.observation());
+            AddShiftRequestDTO sanitizedRequestDto = new AddShiftRequestDTO(
+                    requestDto.employeeId(),
+                    requestDto.laborId(),
+                    requestDto.date(),
+                    requestDto.startTime(),
+                    requestDto.endTime(),
+                    requestDto.active(),
+                    sanitizedObservation
+            );
+
+            addShiftUseCase.execute(sanitizedRequestDto);
             log.info("[ÉXITO] Turno procesado y creado exitosamente en el sistema.");
             return new ResponseEntity<>(HttpStatus.CREATED);
 
