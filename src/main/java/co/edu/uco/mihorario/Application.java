@@ -1,4 +1,4 @@
-package co.edu.uco.miHorario;
+package co.edu.uco.mihorario;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

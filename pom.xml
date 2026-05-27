@@ -104,7 +104,7 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
-					<mainClass>co.edu.uco.miHorario.Application</mainClass>
+					<mainClass>co.edu.uco.mihorario.Application</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
