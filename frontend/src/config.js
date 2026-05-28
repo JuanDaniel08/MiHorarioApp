@@ -6,10 +6,15 @@ export const ENDPOINTS = {
     labors: `${API_BASE}/labors`
 };
 
-export function getAuthHeaders(currentUser, includeCaptcha = false) {
+export const KEYCLOAK_CONFIG = {
+    url: 'http://localhost:8090',
+    realm: 'mihorario-realm',
+    clientId: 'mihorario-client'
+};
+
+export function getAuthHeaders(token, includeCaptcha = false) {
     const headers = {};
-    if (currentUser) {
-        const token = currentUser.role === 'admin' ? 'token-valid-coordinador' : 'token-invalid-empleado';
+    if (token) {
         headers['Authorization'] = `Bearer ${token}`;
     }
     if (includeCaptcha) {

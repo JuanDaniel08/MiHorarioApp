@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,10 +52,11 @@ public class SecurityValidationTest {
         mockMvc.perform(post("/api/v1/shifts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(payload))
-                .andExpect(status().isForbidden()); // Spring Security returns 403 when not authenticated or denied
+                .andExpect(status().isUnauthorized()); // Spring Security returns 401 when not authenticated
     }
 
     @Test
+    @WithMockUser(username = "empleado", roles = {"EMPLEADO"})
     public void whenPostShiftWithInvalidRole_thenReturns403() throws Exception {
         String payload = """
             {
@@ -69,7 +71,6 @@ public class SecurityValidationTest {
             """;
 
         mockMvc.perform(post("/api/v1/shifts")
-                .header("Authorization", "Bearer token-invalid-empleado")
                 .header("X-Captcha-Token", "google-recaptcha-v3-token-valid")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(payload))
@@ -77,6 +78,7 @@ public class SecurityValidationTest {
     }
 
     @Test
+    @WithMockUser(username = "coordinador", roles = {"COORDINADOR"})
     public void whenPostShiftWithoutCaptcha_thenReturns400() throws Exception {
         String payload = """
             {
@@ -91,7 +93,6 @@ public class SecurityValidationTest {
             """;
 
         mockMvc.perform(post("/api/v1/shifts")
-                .header("Authorization", "Bearer token-valid-coordinador")
                 // Missing captcha
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(payload))
@@ -99,6 +100,7 @@ public class SecurityValidationTest {
     }
 
     @Test
+    @WithMockUser(username = "coordinador", roles = {"COORDINADOR"})
     public void whenPostShiftWithValidRoleAndCaptcha_thenReturns201() throws Exception {
         String payload = """
             {
@@ -113,7 +115,6 @@ public class SecurityValidationTest {
             """;
 
         mockMvc.perform(post("/api/v1/shifts")
-                .header("Authorization", "Bearer token-valid-coordinador")
                 .header("X-Captcha-Token", "google-recaptcha-v3-token-valid")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(payload))

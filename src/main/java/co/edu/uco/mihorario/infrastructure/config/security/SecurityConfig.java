@@ -39,12 +39,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
                 // Desactivamos CSRF porque las APIs REST usan tokens (JWT), no cookies
-                .csrf(csrf -> csrf.disable())
-
-                // Registramos el filtro JWT personalizado para validar los tokens de rol
-                // (mock/desarrollo local)
-                .addFilterBefore(new JwtAuthenticationFilter(),
-                        org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
+                .csrf(csrf -> csrf.disable());
 
         // 🔐 2. Habilitamos el soporte para validar tokens JWT federados (Identity
         // Provider) en la nube si hay un emisor configurado
@@ -67,7 +62,8 @@ public class SecurityConfig {
                         "/swagger-ui.html",
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
-                        "/actuator/**")
+                        "/actuator/**",
+                        "/error")
                 .permitAll()
 
                 // Permite consulta pública de empleados y labores para iniciar sesión y llenar
