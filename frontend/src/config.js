@@ -7,7 +7,7 @@ export const ENDPOINTS = {
 };
 
 export const KEYCLOAK_CONFIG = {
-    url: 'http://localhost:8090',
+    url: import.meta.env.VITE_KEYCLOAK_URL || 'http://localhost:8090',
     realm: 'mihorario-realm',
     clientId: 'mihorario-client'
 };
