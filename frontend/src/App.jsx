@@ -7,6 +7,7 @@ import StatsGrid from './components/StatsGrid';
 import ShiftForm from './components/ShiftForm';
 import ShiftTable from './components/ShiftTable';
 import ToastNotification from './components/ToastNotification';
+import CaptchaModal from './components/CaptchaModal';
 
 export default function App() {
   // Keycloak & Auth State
@@ -14,6 +15,9 @@ export default function App() {
   const [token, setToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [isCaptchaSolved, setIsCaptchaSolved] = useState(() => {
+    return sessionStorage.getItem('mihorario_captcha_solved') === 'true';
+  });
 
   // App Navigation & Toasts State
   const [activeSection, setActiveSection] = useState('dashboard');
@@ -149,11 +153,11 @@ export default function App() {
 
   // Load static data on token acquisition
   useEffect(() => {
-    if (token) {
+    if (token && isCaptchaSolved) {
       loadStaticData();
       loadShifts();
     }
-  }, [token, loadStaticData, loadShifts]);
+  }, [token, isCaptchaSolved, loadStaticData, loadShifts]);
 
   // Handle section scrolling
   const handleSectionChange = (section) => {
@@ -169,6 +173,20 @@ export default function App() {
 
   const handleLogout = () => {
     if (keycloak) {
+      sessionStorage.removeItem('mihorario_captcha_solved');
+      keycloak.logout();
+    }
+  };
+
+  const handleCaptchaSuccess = () => {
+    setIsCaptchaSolved(true);
+    sessionStorage.setItem('mihorario_captcha_solved', 'true');
+    addToast('Acceso Concedido', 'Verificación de seguridad completada.', 'success');
+  };
+
+  const handleCancelCaptcha = () => {
+    if (keycloak) {
+      sessionStorage.removeItem('mihorario_captcha_solved');
       keycloak.logout();
     }
   };
@@ -240,6 +258,29 @@ export default function App() {
   }
 
   if (!currentUser) return null;
+
+  // Show Captcha Modal if authenticated with Keycloak but not yet verified
+  if (!isCaptchaSolved) {
+    return (
+      <div className="login-screen">
+        <CaptchaModal 
+          onClose={handleCancelCaptcha} 
+          onSuccess={handleCaptchaSuccess} 
+        />
+        <div className="toast-container">
+          {toasts.map(t => (
+            <ToastNotification 
+              key={t.id} 
+              title={t.title} 
+              description={t.description} 
+              type={t.type} 
+              onClose={() => removeToast(t.id)} 
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container">
