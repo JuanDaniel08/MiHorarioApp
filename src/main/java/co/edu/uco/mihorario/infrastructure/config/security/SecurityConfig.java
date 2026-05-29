@@ -1,5 +1,7 @@
 package co.edu.uco.mihorario.infrastructure.config.security;
 
+import co.edu.uco.mihorario.infrastructure.adapters.persistence.repository.EmployeeJpaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +34,9 @@ public class SecurityConfig {
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:}")
     private String issuerUri;
 
+    @Autowired
+    private EmployeeJpaRepository employeeJpaRepository;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -45,7 +50,7 @@ public class SecurityConfig {
         // Provider) en la nube si hay un emisor configurado
         if (issuerUri != null && !issuerUri.trim().isEmpty() && !issuerUri.contains("dev-placeholder")) {
             http.oauth2ResourceServer(oauth2 -> oauth2
-                    .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
+                    .jwt(jwt -> jwt.jwtAuthenticationConverter(new KeycloakUserSyncConverter(jwtAuthenticationConverter(), employeeJpaRepository))));
         }
 
         // Configuración de las reglas de los endpoints
