@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-public class SecurityValidationTest {
+class SecurityValidationTest {
 
     private MockMvc mockMvc;
 
@@ -28,7 +28,7 @@ public class SecurityValidationTest {
     private AddShiftUseCase addShiftUseCase;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
@@ -36,7 +36,7 @@ public class SecurityValidationTest {
     }
 
     @Test
-    public void whenPostShiftWithoutToken_thenReturns403Or401() throws Exception {
+    void whenPostShiftWithoutToken_thenReturns403Or401() throws Exception {
         String payload = """
             {
                 "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
@@ -57,7 +57,7 @@ public class SecurityValidationTest {
 
     @Test
     @WithMockUser(username = "empleado", roles = {"EMPLEADO"})
-    public void whenPostShiftWithInvalidRole_thenReturns403() throws Exception {
+    void whenPostShiftWithInvalidRole_thenReturns403() throws Exception {
         String payload = """
             {
                 "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
@@ -79,7 +79,7 @@ public class SecurityValidationTest {
 
     @Test
     @WithMockUser(username = "coordinador", roles = {"COORDINADOR"})
-    public void whenPostShiftWithoutCaptcha_thenReturns400() throws Exception {
+    void whenPostShiftWithoutCaptcha_thenReturns400() throws Exception {
         String payload = """
             {
                 "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
@@ -101,7 +101,7 @@ public class SecurityValidationTest {
 
     @Test
     @WithMockUser(username = "coordinador", roles = {"COORDINADOR"})
-    public void whenPostShiftWithValidRoleAndCaptcha_thenReturns201() throws Exception {
+    void whenPostShiftWithValidRoleAndCaptcha_thenReturns201() throws Exception {
         String payload = """
             {
                 "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",

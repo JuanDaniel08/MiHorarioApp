@@ -1,6 +1,6 @@
 package co.edu.uco.mihorario.crosscutting.helpers;
 
-public class StringHelper {
+public final class StringHelper {
     private StringHelper() {
     }
 
