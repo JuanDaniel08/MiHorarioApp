@@ -2,7 +2,7 @@ package co.edu.uco.mihorario.crosscutting.helpers;
 
 import java.util.UUID;
 
-public class UuidHelper {
+public final class UuidHelper {
 
     private UuidHelper() {
     }

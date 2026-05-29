@@ -6,18 +6,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class NotificationGatewayTest {
+class NotificationGatewayTest {
 
     @Autowired
     private NotificationGatewayAdapter notificationGatewayAdapter;
 
     @Test
-    public void whenContextLoads_thenNotificationAdapterIsConfigured() {
+    void whenContextLoads_thenNotificationAdapterIsConfigured() {
         assertNotNull(notificationGatewayAdapter);
     }
 
     @Test
-    public void testSendEmailIntegration() {
+    void testSendEmailIntegration() {
         notificationGatewayAdapter.sendShiftNotification(
                 "jrodriguezgiraldo8@gmail.com",
                 "Juan Rodríguez",

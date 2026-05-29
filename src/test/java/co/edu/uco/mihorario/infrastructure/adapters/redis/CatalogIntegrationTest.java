@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class CatalogIntegrationTest {
+class CatalogIntegrationTest {
 
     @MockitoBean
     private StringRedisTemplate redisTemplate;
@@ -23,7 +23,7 @@ public class CatalogIntegrationTest {
     private RedisParameterCatalogAdapter parameterCatalogAdapter;
 
     @Test
-    public void whenGetMessageFromRedis_thenReturnsCorrectMessage() {
+    void whenGetMessageFromRedis_thenReturnsCorrectMessage() {
         ValueOperations<String, String> valueOperations = mock(ValueOperations.class);
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get("catalog:message:ERR-101")).thenReturn("Mensaje de prueba");
@@ -33,7 +33,7 @@ public class CatalogIntegrationTest {
     }
 
     @Test
-    public void whenGetParameterFromRedis_thenReturnsCorrectParameter() {
+    void whenGetParameterFromRedis_thenReturnsCorrectParameter() {
         ValueOperations<String, String> valueOperations = mock(ValueOperations.class);
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get("catalog:parameter:SHIFT_MAX_HOURS")).thenReturn("10");
