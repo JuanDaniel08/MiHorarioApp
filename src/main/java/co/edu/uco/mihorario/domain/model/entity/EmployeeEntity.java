@@ -19,7 +19,7 @@ public class EmployeeEntity {
         setId(id);
         setName(name);
         setLastName(lastName);
-        setIdentification(identification);
+        setIdentification(document);
         setPhone(phone);
         setEmail(email);
         setState(state);
