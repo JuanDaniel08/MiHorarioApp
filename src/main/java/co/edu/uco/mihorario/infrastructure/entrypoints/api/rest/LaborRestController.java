@@ -2,7 +2,6 @@ package co.edu.uco.mihorario.infrastructure.entrypoints.api.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +11,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/labors")
-@CrossOrigin(origins = "*")
 public class LaborRestController {
 
     public record LaborDTO(

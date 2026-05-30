@@ -32,6 +32,9 @@ public class SecurityConfig {
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:}")
     private String issuerUri;
 
+    @Value("${app.cors.allowed-origins:http://localhost:3000,http://localhost:5173}")
+    private List<String> allowedOrigins;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -127,9 +130,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Permite que peticiones de cualquier origen (como tu index.html local) se
-        // conecten
-        configuration.setAllowedOrigins(List.of("*"));
+        // Permite que peticiones de los orígenes configurados se conecten
+        configuration.setAllowedOrigins(allowedOrigins);
 
         // Métodos HTTP permitidos en la arquitectura
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
