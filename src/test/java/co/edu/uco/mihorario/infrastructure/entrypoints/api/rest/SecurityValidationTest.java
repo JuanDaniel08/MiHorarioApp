@@ -35,19 +35,20 @@ class SecurityValidationTest {
                 .build();
     }
 
+    // Holas
     @Test
     void whenPostShiftWithoutToken_thenReturns403Or401() throws Exception {
         String payload = """
-            {
-                "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
-                "laborId": "f8e7d6c5-b4a3-2f1e-0d9c-8b7a6f5e4d3c",
-                "date": "2026-05-25",
-                "startTime": "2026-05-25T06:00:00",
-                "endTime": "2026-05-25T14:00:00",
-                "active": true,
-                "observation": "Test observation"
-            }
-            """;
+                {
+                    "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+                    "laborId": "f8e7d6c5-b4a3-2f1e-0d9c-8b7a6f5e4d3c",
+                    "date": "2026-05-25",
+                    "startTime": "2026-05-25T06:00:00",
+                    "endTime": "2026-05-25T14:00:00",
+                    "active": true,
+                    "observation": "Test observation"
+                }
+                """;
 
         mockMvc.perform(post("/api/v1/shifts")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -56,19 +57,19 @@ class SecurityValidationTest {
     }
 
     @Test
-    @WithMockUser(username = "empleado", roles = {"EMPLEADO"})
+    @WithMockUser(username = "empleado", roles = { "EMPLEADO" })
     void whenPostShiftWithInvalidRole_thenReturns403() throws Exception {
         String payload = """
-            {
-                "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
-                "laborId": "f8e7d6c5-b4a3-2f1e-0d9c-8b7a6f5e4d3c",
-                "date": "2026-05-25",
-                "startTime": "2026-05-25T06:00:00",
-                "endTime": "2026-05-25T14:00:00",
-                "active": true,
-                "observation": "Test observation"
-            }
-            """;
+                {
+                    "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+                    "laborId": "f8e7d6c5-b4a3-2f1e-0d9c-8b7a6f5e4d3c",
+                    "date": "2026-05-25",
+                    "startTime": "2026-05-25T06:00:00",
+                    "endTime": "2026-05-25T14:00:00",
+                    "active": true,
+                    "observation": "Test observation"
+                }
+                """;
 
         mockMvc.perform(post("/api/v1/shifts")
                 .header("X-Captcha-Token", "google-recaptcha-v3-token-valid")
@@ -78,19 +79,19 @@ class SecurityValidationTest {
     }
 
     @Test
-    @WithMockUser(username = "coordinador", roles = {"COORDINADOR"})
+    @WithMockUser(username = "coordinador", roles = { "COORDINADOR" })
     void whenPostShiftWithoutCaptcha_thenReturns400() throws Exception {
         String payload = """
-            {
-                "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
-                "laborId": "f8e7d6c5-b4a3-2f1e-0d9c-8b7a6f5e4d3c",
-                "date": "2026-05-25",
-                "startTime": "2026-05-25T06:00:00",
-                "endTime": "2026-05-25T14:00:00",
-                "active": true,
-                "observation": "Test observation"
-            }
-            """;
+                {
+                    "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+                    "laborId": "f8e7d6c5-b4a3-2f1e-0d9c-8b7a6f5e4d3c",
+                    "date": "2026-05-25",
+                    "startTime": "2026-05-25T06:00:00",
+                    "endTime": "2026-05-25T14:00:00",
+                    "active": true,
+                    "observation": "Test observation"
+                }
+                """;
 
         mockMvc.perform(post("/api/v1/shifts")
                 // Missing captcha
@@ -100,19 +101,19 @@ class SecurityValidationTest {
     }
 
     @Test
-    @WithMockUser(username = "coordinador", roles = {"COORDINADOR"})
+    @WithMockUser(username = "coordinador", roles = { "COORDINADOR" })
     void whenPostShiftWithValidRoleAndCaptcha_thenReturns201() throws Exception {
         String payload = """
-            {
-                "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
-                "laborId": "f8e7d6c5-b4a3-2f1e-0d9c-8b7a6f5e4d3c",
-                "date": "2026-05-25",
-                "startTime": "2026-05-25T06:00:00",
-                "endTime": "2026-05-25T14:00:00",
-                "active": true,
-                "observation": "Test observation"
-            }
-            """;
+                {
+                    "employeeId": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+                    "laborId": "f8e7d6c5-b4a3-2f1e-0d9c-8b7a6f5e4d3c",
+                    "date": "2026-05-25",
+                    "startTime": "2026-05-25T06:00:00",
+                    "endTime": "2026-05-25T14:00:00",
+                    "active": true,
+                    "observation": "Test observation"
+                }
+                """;
 
         mockMvc.perform(post("/api/v1/shifts")
                 .header("X-Captcha-Token", "google-recaptcha-v3-token-valid")
